@@ -162,25 +162,17 @@ public class CollisionTester {
     }
 
     public static boolean checkCircleCollisions(Ship ship1, CannonBall ball){
+//       calculates whether a hit has occurred.
         ToastMessage toast;
-//        double[] polygon1x = {ship1.bounds.lowerLeft.x,
-//                ship1.bounds.lowerRight.x,
-//                ship1.bounds.topRight.x,
-//                ship1.bounds.topLeft.x,
-//        };
-//
-//        double[] polygon1y = {ship1.bounds.lowerLeft.y,
-//                ship1.bounds.lowerRight.y,
-//                ship1.bounds.topRight.y,
-//                ship1.bounds.topLeft.y,
-//        };
+
         double[] polygon1x = ship1.boundingShape.polygon1x;
         double[] polygon1y = ship1.boundingShape.polygon1y;
 
         if (isPointInsidePolygon(polygon1x,polygon1y,ball.position.x,ball.position.y)) {
 
-//            calculate the polygon edge which was crossed, line1
-
+//            once the ball is determined to be inside the polygon, the forces are calculated by
+// simple point momentum. This whole section should be moved into a new function (damage handler?)
+//
 
 
             if (ball.z < ship1.VESSEL_HEIGHT * 2) {

@@ -159,13 +159,11 @@ public class WorldRenderer {
     }
 
     private void renderBuoys() {
-        TextureRegion keyFrame = Assets.buoy.getKeyFrame(world.buoy.stateTime,
-                Animation.ANIMATION_LOOPING);
-
         for (Buoy buoy : world.buoys){
-            batcher.drawSprite(world.buoy.position.x, world.buoy.position.y, 4, 10, keyFrame);
+            TextureRegion keyFrame = Assets.buoy.getKeyFrame(buoy.stateTime,
+                    Animation.ANIMATION_LOOPING);
+            batcher.drawSprite(buoy.position.x, buoy.position.y, 4, 10, keyFrame);
         }
-
     }
 
     private void renderPlayer() {

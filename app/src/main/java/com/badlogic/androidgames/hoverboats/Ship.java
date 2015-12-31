@@ -25,6 +25,8 @@ public class Ship extends DynamicGameObject {
 
     static World world;
 
+    public float pointsForKill = 0f;
+    public float pointsForHit = 0f;
     public float VESSEL_WIDTH;
     public float VESSEL_LENGTH;
     public static final float VESSEL_HEIGHT = 20f;
@@ -111,6 +113,7 @@ public class Ship extends DynamicGameObject {
                 state = VESSEL_STATE_SUNK;
             return;
         } else if (state == VESSEL_STATE_SUNK) {
+            world.score += pointsForKill;
             return;
         }else if (state == VESSEL_STATE_SAILING){
             routine.act(this, world, delta);

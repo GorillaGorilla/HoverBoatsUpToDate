@@ -46,7 +46,6 @@ public class World {
     public List<Vector2> windHist = new ArrayList<Vector2>();
 
     public final PlayerShip hmsVictory;
-    public final Buoy buoy;
     public final List<Buoy> buoys;
     public final List<Rock> rocks;
     public final List<Ship> ships;
@@ -61,6 +60,9 @@ public class World {
     public int state;
     public float timer, t2;
 
+    List<Vector2> patrolPoints = new ArrayList<Vector2>();
+
+
 
     public World(WorldListener listener) {
         this.hmsVictory = new PlayerShip(WORLD_WIDTH/2, WORLD_HEIGHT/2, new Vector2(1,0), wind, this);
@@ -69,13 +71,18 @@ public class World {
         this.balls = new ArrayList<CannonBall>();
         this.smokes = new ArrayList<Smoke>();
         this.buoys = new ArrayList<Buoy>();
-        buoy = new Buoy(2050, 3100);
 
-        buoys.add(buoy);
-        for (int i=0; i<(WORLD_HEIGHT/200); i++){
-            buoys.add(new Buoy(3500,(i+1) * 100));
-            buoys.add(new Buoy(1500,(i+1) * 100));
+//        patrol points to be marked with buoys
+        patrolPoints.add(new Vector2(2000f,3500f));
+        patrolPoints.add(new Vector2(1850f,3000f));
+        patrolPoints.add(new Vector2(1700f,3200f));
+        patrolPoints.add(new Vector2(2100f,3300f));
+        patrolPoints.add(new Vector2(300f,2500f));
+
+        for (Vector2 point : patrolPoints){
+            buoys.add(new Buoy(point.x,point.y));
         }
+
         this.listener = listener;
         rand = new Random();
         generateLevel();
@@ -118,14 +125,15 @@ public class World {
         enemy.bb.targets.add(hmsVictory);
         enemy.routine.reset();
         ships.add(enemy);
-
-//        ships.get(0).setRoutine(Routines.patrol(patrolPoints));
-
-//        ships.get(3).setRoutine(Routines.engageEnemy());
-//        ships.get(3).routine.reset();
-//
-//        ships.get(2).setRoutine(Routines.engageEnemy());
-//        ships.get(2).routine.reset();
+        for (Ship ship : ships){
+            if (ship instanceof CargoBoat){
+                ship.pointsForKill = 100f;
+                ship.pointsForHit = 5f;
+            }else if (ship instanceof EnemyShip){
+                ship.pointsForKill = 15f;
+                ship.pointsForHit = 5f;
+            }
+        }
     }
 
     public void update(float delta, float tillerPosition){
@@ -133,7 +141,6 @@ public class World {
         ForcesHandler.calculateLoads(hmsVictory, delta, tillerPosition);
         hmsVictory.update(delta, tillerPosition);
         updateHits(delta);
-        buoy.update(delta);
         updateBuoys(delta);
         updateBalls(delta);
         updateShips(delta);
@@ -289,33 +296,19 @@ public class World {
             CannonBall ball = balls.get(i);
             for (Ship ship : ships){
                 if (!ship.firedBalls.contains(ball)) {
-                    CollisionTester.checkCircleCollisions(ship, ball);
+//                    tests for collisions, momentum/energy calc included inside
+//   collision tester method as these are used for damage calc
+                    if (CollisionTester.checkCircleCollisions(ship, ball)) {
+//                        if statement used to calculate points. Should be moved to an external
+//                        method
+                        if (ship instanceof CargoBoat || ship instanceof EnemyShip){
+                            score += ship.pointsForHit;
+                        }
+                    };
                 }
             }
             CollisionTester.checkCircleCollisions(hmsVictory, ball);
 
-//            if (OverlapTester
-//                    .overlapRectangles(hmsVictory.bounds, ball.bounds)){
-//                System.out.println("ball collision ship");
-//                if (hmsVictory.state == hmsVictory.VESSEL_STATE_SAILING) {
-//                    hmsVictory.cannonballHit(ball);
-//                    listener.hit();
-//                }
-//
-//            }else {int len2 = rocks.size();
-//                for (int i2 = 0; i2 < len2; i2++) {
-//                    Rock rock = rocks.get(i2);
-//                    if (OverlapTester
-//                            .overlapCircleRectangle(rock.bounds2, ball.bounds)){
-//                        System.out.println("ball rock collision");
-//                        ball.velocity.set(0,0);
-//                        ball.z = 0;
-//                        break;
-//                    }
-//                }
-//
-//
-//            }
         }
 
     }
@@ -370,11 +363,8 @@ public class World {
 
 
                     if (CollisionTester.checkClose(boat, ship, 100)){
-
                         retry = true;
                     }
-
-
                 }
 
                 for (GameObject rock : rocks) {
