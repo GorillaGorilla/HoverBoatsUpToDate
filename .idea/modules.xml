@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/HoverBoats.iml" filepath="$PROJECT_DIR$/HoverBoats.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HoverBoatsUpToDate.iml" filepath="$PROJECT_DIR$/HoverBoatsUpToDate.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
 </project>
-

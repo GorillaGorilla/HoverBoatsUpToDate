@@ -48,14 +48,14 @@ public class SailAwaySimple extends Routine {
         self = ship;
         if (!self.bb.targets.isEmpty()) {
             enemy = ship.bb.targets.get(0);
-            if (self.position.dist(enemy.position)<200 && !fleeing){
+            if (self.position.dist(enemy.position)<100 && !fleeing){
                 fleeing = true;
                 patrol.reset();
                 sailAway.act(ship,world,delta);
             }
             else if (fleeing){
                 sailAway.act(ship,world,delta);
-                if (self.position.dist(enemy.position)>800){
+                if (self.position.dist(enemy.position)>500){
                     fleeing = false;
                     sailAway.reset();
                 }

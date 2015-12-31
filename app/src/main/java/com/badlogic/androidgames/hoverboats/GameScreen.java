@@ -39,6 +39,7 @@ public class GameScreen extends GLScreen {
     Rectangle resumeBounds;
     Rectangle quitBounds;
     int lastScore;
+    String speedString;
     String scoreString;
     float lastDist2;
     float dist2;
@@ -70,7 +71,7 @@ public class GameScreen extends GLScreen {
         resumeBounds = new Rectangle(160 - 96, 240, 192, 36);
         quitBounds = new Rectangle(160 - 96, 240 - 36, 192, 36);
         lastScore = 0;
-        scoreString = "Velocity: ";
+        speedString = "Velocity: ";
     }
 
     @Override
@@ -158,19 +159,22 @@ public class GameScreen extends GLScreen {
         world.update(deltaTime, game.getInput().getAccelX());
         if (world.score != lastScore) {
             lastScore = world.score;
+
             scoreString = "" + lastScore;
+            speedString = "" + lastScore;
         }
         String speed = new DecimalFormat("#.##").format(world.hmsVictory.velocity.len());
-        scoreString = "SPEED: " + speed;
+        scoreString = "SCORE: " + world.score;
+        speedString = "SPEED: " + speed;
         if (world.state == World.WORLD_STATE_NEXT_LEVEL) {
             state = GAME_LEVEL_END;
         }
         if (world.state == World.WORLD_STATE_GAME_OVER) {
             state = GAME_OVER;
             if (lastScore >= Settings.highscores[4])
-                scoreString = "new highscore: " + lastScore;
+                speedString = "new highscore: " + lastScore;
             else
-                scoreString = "score: " + lastScore;
+                speedString = "score: " + lastScore;
             Settings.addScore(lastScore);
             Settings.save(game.getFileIO());
         }
@@ -245,7 +249,7 @@ public class GameScreen extends GLScreen {
 
     private void presentRunning() {
         batcher.drawSprite(320 - 32, 480 - 32, 64, 64, Assets.pause);
-        Assets.font.drawText(batcher, scoreString, 16, 480 - 20);
+        Assets.font.drawText(batcher, speedString, 16, 480 - 20);
 //        TextureRegion keyFrame = Assets.breakingShip.getKeyFrame(world.hmsVictory.stateTime,
 //        Animation.ANIMATION_NONLOOPING);
 //
@@ -266,8 +270,8 @@ public class GameScreen extends GLScreen {
 
     private void presentGameOver() {
         batcher.drawSprite(160, 240, 160, 96, Assets.gameOver);
-        float scoreWidth = Assets.font.glyphWidth * scoreString.length();
-        Assets.font.drawText(batcher, scoreString, 160 - scoreWidth / 2, 480 - 20);
+        float scoreWidth = Assets.font.glyphWidth * speedString.length();
+        Assets.font.drawText(batcher, speedString, 160 - scoreWidth / 2, 480 - 20);
     }
 
     private void pinchZoom() {

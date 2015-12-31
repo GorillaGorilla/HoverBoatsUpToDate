@@ -169,6 +169,9 @@ public class Ship extends DynamicGameObject {
         if (portHull < 1 || starboardHull < 1 || bowHull < 1 || sternHull < 1) {
             state = VESSEL_STATE_SINKING;
             stateTime = 0;
+            if (this instanceof CargoBoat){
+                world.score += 50;
+            }
         }
     }
 
