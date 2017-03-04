@@ -228,7 +228,7 @@ public class World {
                     ForcesHandler.calculateLoads(ship, delta, ship.tillerPos);
                 }
                 ship.update(delta);
-                System.out.println("tillerpos: " + ship.tillerPos);
+//                System.out.println("tillerpos: " + ship.tillerPos);
             }
         }
     }
@@ -355,13 +355,11 @@ public class World {
             boolean retry = true;
             while (retry) {
                 retry = false;
-                xPos = rand.nextInt((int) WORLD_WIDTH) ;  // may not produce what i want, check later
+                xPos = rand.nextInt((int) WORLD_WIDTH) ;  // may not produce what I want, check later
                 yPos = rand.nextInt((int) WORLD_HEIGHT);
                 boat.position.set(xPos, yPos);
                 System.out.println("checking");
                 for (GameObject ship : ships) {
-
-
                     if (CollisionTester.checkClose(boat, ship, 100)){
                         retry = true;
                     }
@@ -380,14 +378,10 @@ public class World {
                 }
             }
         System.out.println("space found");
-        boat.setRoutine(new EngageEnemy());
+        boat.setRoutine(Routines.engageEnemy());
         boat.bb.targets.add(hmsVictory);
         boat.routine.reset();
             ships.add(boat);
-
-
-
-
 
     }
 

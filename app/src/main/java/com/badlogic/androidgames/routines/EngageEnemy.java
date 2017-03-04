@@ -30,7 +30,8 @@ public class EngageEnemy extends Routine {
 
         wait2 = Routines.wait(2f);
         closeOnTarget = Routines.closeOnTarget();
-        selector1 = Routines.selector((potShot) , sequence2,closeOnTarget);
+        selector1 = Routines.selector(sequence2, closeOnTarget);
+//        selector1 = Routines.selector((potShot) , sequence2,closeOnTarget); // potShot not working so removed anyway
 //      selector1 = Routines.selector((potShot) , sequence2,closeOnTarget,wait2);
 
         repeat = Routines.repeat(selector1);
@@ -65,9 +66,9 @@ public class EngageEnemy extends Routine {
                 fail();
             }
 
-            if (potShot.isFailure()){
-                potShot.reset();
-            }
+//            if (potShot.isFailure()){
+//                potShot.reset();
+//            }
 
 
         }

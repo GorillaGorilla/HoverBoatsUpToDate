@@ -191,9 +191,10 @@ public class Ship extends DynamicGameObject {
         damage += energyDivToughness;
 //        SAIL_AREA -= energyDivToughness*10f;
         if (world.rand.nextInt(2)>1) {  // destroys bit of sail at random
-            sail.area -= energyDivToughness * 10f;
-            if (sail.area < 0) {
-                sail.area = 0;
+            
+            setSailArea(getSailArea() - energyDivToughness * 10f);
+            if (getSailArea() < 0) {
+                setSailArea(0);
             }
         }
 
@@ -324,6 +325,19 @@ public class Ship extends DynamicGameObject {
         }
         return false;
     }
+
+    public float getSailArea(){
+        return sail.getArea();
+    }
+
+    public void setSailArea(float newArea){
+        sail.setArea(newArea);
+    }
+
+    public Vector2 calcSailForces(Vector2 apparentWind, float CdyNormal){
+        return sail.calcSailForces(apparentWind, CdyNormal);
+    }
+
     public void setRoutine(Routine routine){
         this.routine = routine;
     }

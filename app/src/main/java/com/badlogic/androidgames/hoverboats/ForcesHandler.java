@@ -75,7 +75,7 @@ public class ForcesHandler {
         float CdxNormal = ship.CdxNormal;
         float Cdy = ship.Cdy;
         float CdyNormal = ship.CdyNormal;
-        float sailArea = ship.sail.area;
+        float sailArea = ship.getSailArea();
         float ro = 1.2754f;
         float CdWaterX = 150f;
         float CdWaterY = 5000f;
@@ -95,28 +95,8 @@ public class ForcesHandler {
         apparentWind.rotate(-angle);
         relativeWater.rotate(-angle);
         calcSailAngle(AngleCalc.reverse(apparentWind.angle()),ship);
-        if ((apparentWind.angle()) < 200 && (apparentWind.angle() > 160)) {
-            Cdx = 0.0f; CdxNormal = 0.05f; Cdy = 0.1f;}
-        else if((apparentWind.angle()) < 220 && (apparentWind.angle() > 200)
-                || (apparentWind.angle()) < 160 && (apparentWind.angle() > 140) ){
-            Cdy = 0.4f; Cdx = 0.3f; CdxNormal = 0.4f;
-        }
-        else {
-            Cdy = 0.4f; Cdx = 0.6f; CdxNormal = 0.4f;
 
-        }
-
-//        aggregate forces from the sail
-        windForce.x = Math.abs(0.5f * apparentWind.x * apparentWind.len() * ro * sailArea * Cdx);
-//      proportion of y sideways wind that is coverted into forward propulsion
-        windForce.x += 0.5f * Math.abs(apparentWind.y * apparentWind.len() * ro * sailArea * Cdy);
-//        the proportion of the x-normal wind that is converted directly into propulsion,
-//        slows into the wind, speeds downwind
-        windForce.x += 0.5f * (apparentWind.x * apparentWind.len() * ro * sailArea * CdxNormal);
-//      proportion of y direction (sideways wind) which pushes sideways
-        windForce.y = 0.5f * apparentWind.y * apparentWind.len() * ro * sailArea * CdyNormal;
-
-
+        windForce = ship.calcSailForces(apparentWind, CdyNormal);
 
         waterForces.x = relativeWater.x * relativeWater.len() * CdWaterX;
         waterForces.y = relativeWater.y * relativeWater.len() * CdWaterY;

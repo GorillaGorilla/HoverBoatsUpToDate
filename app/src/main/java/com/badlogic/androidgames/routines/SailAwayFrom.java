@@ -1,5 +1,7 @@
-package com.badlogic.androidgames.hoverboats;
+package com.badlogic.androidgames.routines;
 
+import com.badlogic.androidgames.hoverboats.Ship;
+import com.badlogic.androidgames.hoverboats.World;
 import com.badlogic.androidgames.routines.Routine;
 import com.badlogic.androidgames.routines.Routines;
 

@@ -19,6 +19,8 @@ public class HuntPatrol extends Routine {
     Routine selector;
     List<Vector2> vecs = new ArrayList<Vector2>();
 
+//    should engage enemy or fall back to patrol... seems to work for engaging enemy at least
+
     public HuntPatrol(Vector2... vector2s){
         engageTarget = Routines.engageEnemy();
         for (Vector2 vec : vector2s){

@@ -49,9 +49,9 @@ public class Assets {
     public static Font font;
 
     public static void loadGame(GLGame game) {
-        background = new Texture(game, "Background.png");
+//        background = new Texture(game, "Background.png");
         background2 = new Texture(game, "water2.png");
-        backgroundRegion = new TextureRegion(background, 0, 0, 320, 480);
+//        backgroundRegion = new TextureRegion(background, 0, 0, 320, 480);
         backgroundRegion2 = new TextureRegion(background2, 0, 0, 512, 401);
         items = new Texture(game, "AtlasGrid.png");
         mainMenu = new TextureRegion(items, 0, 224, 300, 110);
@@ -126,7 +126,7 @@ public class Assets {
     }
 
     public static void reload() {
-        background.reload();
+        background2.reload();
         items.reload();
         if (Settings.soundEnabled)
             music.play();
