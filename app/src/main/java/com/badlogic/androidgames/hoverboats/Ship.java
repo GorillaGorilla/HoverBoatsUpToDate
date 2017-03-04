@@ -338,6 +338,19 @@ public class Ship extends DynamicGameObject {
         return sail.calcSailForces(apparentWind, CdyNormal);
     }
 
+    public void changeSails(){
+        if (sail.getTargetState().equals("BALANCED")){
+            sail.changeState("FULL CANVAS");
+        }else if (sail.getTargetState().equals("FULL CANVAS")){
+            sail.changeState("BALANCED");
+        }
+        System.out.println("---&&&  Ship.changeSails " + sail.getTargetState());
+    }
+
+    public String getSailState(){
+        return sail.getSTATE();
+    }
+
     public void setRoutine(Routine routine){
         this.routine = routine;
     }

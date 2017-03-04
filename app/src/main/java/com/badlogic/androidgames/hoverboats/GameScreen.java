@@ -36,6 +36,7 @@ public class GameScreen extends GLScreen {
     World.WorldListener worldListener;
     WorldRenderer renderer;
     Rectangle pauseBounds;
+    Rectangle sailChangeBounds;
     Rectangle resumeBounds;
     Rectangle quitBounds;
     int lastScore;
@@ -68,6 +69,7 @@ public class GameScreen extends GLScreen {
         world = new World(worldListener);
         renderer = new WorldRenderer(glGraphics, batcher, world);
         pauseBounds = new Rectangle(320 - 64, 480 - 64, 64, 64);
+        sailChangeBounds = new Rectangle(0, 0, 64, 64);
         resumeBounds = new Rectangle(160 - 96, 240, 192, 36);
         quitBounds = new Rectangle(160 - 96, 240 - 36, 192, 36);
         lastScore = 0;
@@ -133,7 +135,11 @@ public class GameScreen extends GLScreen {
                         Assets.playSound(Assets.click);
                         state = GAME_PAUSED;
                         return;
-                    } else {
+
+
+                    } else if(OverlapTester.pointInRectangle(sailChangeBounds, touchPoint)){
+                        world.hmsVictory.changeSails();
+                    } else{
                         Vector2 tp = new Vector2(event.x, event.y);
                         renderer.cam.touchToWorld(tp);
 //                calculates angle to the boat assuming the centre of screen is always the boat

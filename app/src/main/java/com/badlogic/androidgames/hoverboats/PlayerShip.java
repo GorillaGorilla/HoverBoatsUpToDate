@@ -51,10 +51,12 @@ public class PlayerShip extends Ship {
 
         if (state == VESSEL_STATE_SINKING){
             stateTime += delta;
-            if (stateTime > 1.6f)
+            if (stateTime > 3f)
                 state = VESSEL_STATE_SUNK;
             return;
         }
+
+        sail.update(delta);
 
 //        bounds2.center.set(position);
         bounds.lowerLeft.set(position).sub(VESSEL_LENGTH / 2, VESSEL_WIDTH / 2);

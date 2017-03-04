@@ -40,7 +40,7 @@ public class World {
     public static final int WORLD_STATE_NEXT_LEVEL = 1;
     public static final int WORLD_STATE_GAME_OVER = 2;
     public static final Vector2 gravity = new Vector2(0f, -9.8f);
-    public static final Vector2 wind = new Vector2(4,0.5f);
+    public static final Vector2 wind = new Vector2(5,0.5f);
     public static final Vector2 stream = new Vector2(0,0);
     public static final Vector2 instantaneousWind = wind.cpy();
     public List<Vector2> windHist = new ArrayList<Vector2>();
@@ -154,7 +154,7 @@ public class World {
             System.out.println("player position: " + hmsVictory.position.display());
             System.out.println("angVel" + hmsVictory.angVel.z);
             timer = 0;
-            updateWind();
+//            updateWind();
         }
 
         t2 += delta;

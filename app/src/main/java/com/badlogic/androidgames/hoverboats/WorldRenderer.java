@@ -205,10 +205,23 @@ public class WorldRenderer {
 
             if (!world.hmsVictory.masts.isEmpty()) {
                 for (Mast mast : world.hmsVictory.masts) {
-                    batcher.drawSprite(mast.position.x, mast.position.y,
-                            mast.bredth*mast.sizeScalingFactor, mast.depth*mast.sizeScalingFactor,
-                            (world.hmsVictory.angle - 90 + mast.rotation),
-                            keyFrame);
+                    if(world.hmsVictory.getSailState() == "BALANCED"){
+                        batcher.drawSprite(mast.position.x, mast.position.y,
+                                mast.bredth*mast.sizeScalingFactor*0.8f, mast.depth*mast.sizeScalingFactor*0.8f,
+                                (world.hmsVictory.angle - 90 + mast.rotation),
+                                keyFrame);
+                    } else if (world.hmsVictory.getSailState() == "FULL CANVAS"){
+                        batcher.drawSprite(mast.position.x, mast.position.y,
+                                mast.bredth*mast.sizeScalingFactor, mast.depth*mast.sizeScalingFactor,
+                                (world.hmsVictory.angle - 90 + mast.rotation),
+                                keyFrame);
+                    }else {
+                        batcher.drawSprite(mast.position.x, mast.position.y,
+                        mast.bredth*mast.sizeScalingFactor, mast.depth*mast.sizeScalingFactor*0.4f,
+                                (world.hmsVictory.angle - 90 + mast.rotation),
+                                keyFrame);
+                    }
+
                 }
             }
         }
