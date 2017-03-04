@@ -41,6 +41,7 @@ public class PlayerShip extends Ship {
         this.initialHeading = initialHeading;
         angle = initialHeading.angle();
         this.sail = new Sail(1000);
+        setName("H.M.S Victory");
 
     }
 
@@ -68,29 +69,4 @@ public class PlayerShip extends Ship {
         bb.update();
     }
 
-
-
-
-//    public void fire(float angle){
-//        if (angle < 0){
-//            angle +=180 + 360;
-//        }
-//        System.out.println("R... Shot detected angle: " + angle);
-//
-//        if (angle > 20 && angle < 160) {
-////            port side
-//            portGuns.fire();
-//        }if (angle > 170 && angle < 190){
-////            stern
-//
-//        }if (angle > 200 && angle < 340){
-////            starboard
-//            starboardGuns.fire();
-//
-//        }if (angle > 350 || angle < 10){
-////            front
-//            System.out.println("R..... FOrwards");
-//            forwardGuns.fire();
-//        }
-//    }
 }

@@ -126,14 +126,15 @@ public class WorldRenderer {
                 if (!ship.masts.isEmpty()) {
                     for (Mast mast : ship.masts) {
                         batcher.drawSprite(mast.position.x, mast.position.y,
-                                mast.bredth*mast.sizeScalingFactor, mast.depth*mast.sizeScalingFactor,
-                                (ship.angle - 90 + mast.rotation),keyFrame);
-//                        if (ship.bb.inDanger){
-//                            batcher.drawSprite(ship.position.x+10, ship.position.y+10,
-//                                    3, 4,
-//                                    (ship.angle),keyFrame);
-//
-//                    }
+                                mast.bredth*mast.sizeScalingFactor,
+                                mast.depth*mast.sizeScalingFactor,
+                                (ship.angle - 90 + mast.rotation),
+                                keyFrame);
+                        if (ship.bb.inDanger){
+                            batcher.drawSprite(ship.position.x+10, ship.position.y+10,
+                                    3, 4,
+                                    (ship.angle),keyFrame);
+                        }
 
                     }
                 }
@@ -205,12 +206,12 @@ public class WorldRenderer {
 
             if (!world.hmsVictory.masts.isEmpty()) {
                 for (Mast mast : world.hmsVictory.masts) {
-                    if(world.hmsVictory.getSailState() == "BALANCED"){
+                    if(world.hmsVictory.getSailState().equals("BALANCED")){
                         batcher.drawSprite(mast.position.x, mast.position.y,
                                 mast.bredth*mast.sizeScalingFactor*0.8f, mast.depth*mast.sizeScalingFactor*0.8f,
                                 (world.hmsVictory.angle - 90 + mast.rotation),
                                 keyFrame);
-                    } else if (world.hmsVictory.getSailState() == "FULL CANVAS"){
+                    } else if (world.hmsVictory.getSailState().equals("FULL CANVAS")){
                         batcher.drawSprite(mast.position.x, mast.position.y,
                                 mast.bredth*mast.sizeScalingFactor, mast.depth*mast.sizeScalingFactor,
                                 (world.hmsVictory.angle - 90 + mast.rotation),

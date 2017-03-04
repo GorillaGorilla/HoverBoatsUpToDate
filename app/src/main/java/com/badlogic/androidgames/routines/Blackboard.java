@@ -85,7 +85,6 @@ public class Blackboard {
         if (Math.abs(ship.tillerPos)>1){
             float speedFac = ship.velocity.len();
             System.out.println(fM.display());
-
             fM.rotate(-speedFac * 10f* ship.TURN_SPEED*ship.TURN_SPEED * (ship.tillerPos / 10f));
 //            System.out.println("fM: "+ fM.display());
 //            System.out.println("rotate: "+-speedFac * 10f* ship.TURN_SPEED*ship.TURN_SPEED * (ship.tillerPos / 10f));

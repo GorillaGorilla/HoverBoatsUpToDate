@@ -20,8 +20,6 @@ public class TurnBroadside extends Routine {
     @Override
     public void act(Ship ship, World world, float delta) {
 
-
-
         if (isRunning()) {
 //            System.out.println("turning to fire!");
             timer += delta;
@@ -30,7 +28,7 @@ public class TurnBroadside extends Routine {
                 System.out.println("failed turing to fire!");
                 return;
             }
-
+            System.out.println("---&&& Turning to fire" + timer);
             if (ship.bb.gunDeckChoice == 2) {
 //            starboard
 

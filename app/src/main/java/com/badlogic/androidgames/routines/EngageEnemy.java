@@ -56,7 +56,7 @@ public class EngageEnemy extends Routine {
 
             if (ship.bb.targets.isEmpty()){
                 fail();
-            }else if(ship.bb.targets.get(0).state == ship.bb.targets.get(0).VESSEL_STATE_SINKING){
+            }else if(ship.bb.targets.get(0).isSinking()){
                 succeed();
             }
 
@@ -65,12 +65,9 @@ public class EngageEnemy extends Routine {
             if (repeat.isFailure()){
                 fail();
             }
-
 //            if (potShot.isFailure()){
 //                potShot.reset();
 //            }
-
-
         }
 
     }

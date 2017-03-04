@@ -8,6 +8,7 @@ import com.badlogic.androidgames.routines.SetCourse;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import framework.classes.Circle;
 import framework.classes.DynamicGameObject;
@@ -60,6 +61,7 @@ public class Ship extends DynamicGameObject {
     public float sailAngle = 0;
     public Circle bounds2;
     public Routine routine;
+    private String name;
     public BoundingShape boundingShape = new BoundingShape();
     public float spriteFactor = 1;  // this is a temporary scalar to allow me to alter the size of different boats
 
@@ -101,6 +103,7 @@ public class Ship extends DynamicGameObject {
         angle = initialHeading.angle();
         bounds.rotate(angle, position);
         this.bb = new Blackboard(this, world);
+        name = "Unnamed";
 
     }
 
@@ -157,11 +160,14 @@ public class Ship extends DynamicGameObject {
 
     public void hitRock(GameObject object) {
 //        find bound point inside region
-
         if (portHull < 1 || starboardHull < 1 || bowHull < 1 || sternHull < 1) {
             state = VESSEL_STATE_SINKING;
             stateTime = 0;
         }
+    }
+
+    public boolean isSinking(){
+        return bb.targets.get(0).state == bb.targets.get(0).VESSEL_STATE_SINKING;
     }
 
     public void shipHit(Ship object) {
@@ -351,6 +357,10 @@ public class Ship extends DynamicGameObject {
         return sail.getSTATE();
     }
 
+    public String getName(){
+        return name;
+    }
+
     public void setRoutine(Routine routine){
         this.routine = routine;
     }
@@ -392,6 +402,25 @@ public class Ship extends DynamicGameObject {
                 return false;
         }
         return false;
+    }
+
+    public void log(String msg){
+        StringBuilder log = new StringBuilder();
+        log.append("---&&& ");
+        log.append(name);
+        log.append(": ");
+        log.append(msg);
+        System.out.println(log.toString());
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public void setRandomName(){
+        Random r = new Random();
+        int i1 = (r.nextInt(3000) + 1);
+        name = "The good ship " + i1;
     }
 
 }
