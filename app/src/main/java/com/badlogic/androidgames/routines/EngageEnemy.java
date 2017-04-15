@@ -9,8 +9,8 @@ import com.badlogic.androidgames.hoverboats.World;
 public class EngageEnemy extends Routine {
     Routine atDest, turnAndFire, chooseGunDeck;
     Routine setMatchingBearing, turn, wait1, wait2, wait3;
-    Routine selector1, selector2, selector3;
-    Routine sequence1, sequence2, sequence3;
+    Routine selFightIfCloseElseApproach, selector2, selTurnAndFireOrSailParallel;
+    Routine sequence1, seqFightTarget, seqSailParallel;
     Routine repeat;
     Routine closeOnTarget;
     Routine potShot;
@@ -18,23 +18,34 @@ public class EngageEnemy extends Routine {
     public EngageEnemy(){
         potShot = Routines.fireGuns();
         turnAndFire = Routines.turnBroadside();
+        turnAndFire.setName("turnAndFire");
         setMatchingBearing = Routines.setMatchingBeating();
+        setMatchingBearing.setName("setMatchingBearing");
         turn = Routines.turnToMatchBearing();
+        turn.setName("turnToMatchBearing");
         wait1 = Routines.wait(3f);
-        sequence3 = Routines.sequence(setMatchingBearing, turn, wait1);
-        selector3 = Routines.selector(turnAndFire,sequence3);
-
+        wait1.setName("wait1");
+        seqSailParallel = Routines.sequence(setMatchingBearing, turn, wait1);
+        seqSailParallel.setName("seqSailParallel");
+        selTurnAndFireOrSailParallel = Routines.selector(turnAndFire, seqSailParallel);
+        selTurnAndFireOrSailParallel.setName("selTurnAndFireOrSailParallel");
         chooseGunDeck = Routines.chooseGunDeck();
+        chooseGunDeck.setName("chooseGunDeck");
         atDest = Routines.closeToTest(250f);
-        sequence2 = Routines.sequence(atDest,chooseGunDeck,selector3);
+        atDest.setName("atDest");
+
+        seqFightTarget = Routines.sequence(atDest,chooseGunDeck, selTurnAndFireOrSailParallel);
+        seqFightTarget.setName("seqFightTarget");
 
         wait2 = Routines.wait(2f);
         closeOnTarget = Routines.closeOnTarget();
-        selector1 = Routines.selector(sequence2, closeOnTarget);
-//        selector1 = Routines.selector((potShot) , sequence2,closeOnTarget); // potShot not working so removed anyway
-//      selector1 = Routines.selector((potShot) , sequence2,closeOnTarget,wait2);
+        closeOnTarget.setName("close n Trgt");
+        selFightIfCloseElseApproach = Routines.selector(seqFightTarget, closeOnTarget);
+        selFightIfCloseElseApproach.setName("close?fght:aprch");
+//        selFightIfCloseElseApproach = Routines.selector((potShot) , seqFightTarget,closeOnTarget); // potShot not working so removed anyway
+//      selFightIfCloseElseApproach = Routines.selector((potShot) , seqFightTarget,closeOnTarget,wait2);
 
-        repeat = Routines.repeat(selector1);
+        repeat = Routines.repeat(selFightIfCloseElseApproach);
 
     }
 
@@ -50,10 +61,10 @@ public class EngageEnemy extends Routine {
     }
 
     @Override
-    public void act(Ship ship, World world, float delta) {
+    public void act(Ship ship, World world, float delta){ super.act(ship, world, delta);
 
         if (isRunning()){
-
+            ship.bb.resetRoutineLog();
             if (ship.bb.targets.isEmpty()){
                 fail();
             }else if(ship.bb.targets.get(0).isSinking()){

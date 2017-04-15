@@ -35,7 +35,7 @@ public class ToastMessage extends DynamicGameObject {
                 stateTime += delta;
             }else{
                 state = FINISHED;
-                System.out.println("finished");
+//                System.out.println("finished");
             }
         }
     }

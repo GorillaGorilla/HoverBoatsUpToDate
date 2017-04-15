@@ -15,7 +15,7 @@ public class Sequence extends Routine {
 
     public Sequence(Routine... newRoutines){
         super();
-
+        name = "seq";
         for (Routine routine : newRoutines) {
             routines.add(routine);
 
@@ -41,12 +41,12 @@ public class Sequence extends Routine {
 
 
     @Override
-    public void act(Ship ship, World world, float delta) {
+    public void act(Ship ship, World world, float delta){ super.act(ship, world, delta);
 //        check if this routine is running otherwise do nothing
         float successCount = 0;
         if (isRunning())
 //        checks each routine for success, if one is found unsucceeded then loop breaks and success not called.
-
+            ship.bb.addRoutineToState(this.name);
             for (Routine routine : routines) {
                 routine.act(ship, world, delta);
                 if (routine.isFailure()){

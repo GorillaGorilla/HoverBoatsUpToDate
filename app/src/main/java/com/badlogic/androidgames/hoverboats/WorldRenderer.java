@@ -66,6 +66,7 @@ public class WorldRenderer {
         renderPlayer();
         renderSmoke();
         renderToasts();
+        renderLabels();
 //        Assets.font.drawText(batcher, "hello",
 //                2000,
 //                3000);
@@ -87,6 +88,14 @@ public class WorldRenderer {
 
         }
 
+    }
+    
+    private void renderLabels(){
+        for (IngameMessage msg : world.messages){
+            Assets.font.drawToast(batcher, msg.message,
+                    msg.position.x - msg.width / 2,
+                    msg.position.y - msg.height,(1f/7f));
+        }
     }
 
     private void renderHits() {

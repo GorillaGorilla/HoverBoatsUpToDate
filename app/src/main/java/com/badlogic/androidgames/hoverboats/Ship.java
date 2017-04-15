@@ -1,5 +1,7 @@
 package com.badlogic.androidgames.hoverboats;
 
+import android.widget.Toast;
+
 import com.badlogic.androidgames.routines.Blackboard;
 import com.badlogic.androidgames.routines.ReverseCourse;
 import com.badlogic.androidgames.routines.Routine;
@@ -82,6 +84,7 @@ public class Ship extends DynamicGameObject {
     public float CdyNormal = 0.5f;
     public Vector2 impulse = new Vector2();
     public Vector2 destination;
+    public IngameMessage stateMessage;
     private boolean starting = true;
 
 
@@ -104,6 +107,8 @@ public class Ship extends DynamicGameObject {
         bounds.rotate(angle, position);
         this.bb = new Blackboard(this, world);
         name = "Unnamed";
+        stateMessage = new IngameMessage(position.x, position.y, bb.getRoutineChainState());
+        world.messages.add(stateMessage);
 
     }
 
@@ -119,6 +124,7 @@ public class Ship extends DynamicGameObject {
             world.score += pointsForKill;
             return;
         }else if (state == VESSEL_STATE_SAILING){
+            bb.resetRoutineLog();
             routine.act(this, world, delta);
             thinkTime += delta;
         }
@@ -128,7 +134,11 @@ public class Ship extends DynamicGameObject {
         boundingShape.updatePos(position,angle);
         updateGunDecks(delta);
         updateMasts(delta);
+
         bb.update();
+        stateMessage.setMessage(bb.getRoutineChainState());
+        stateMessage.updatePosition(position.x, position.y);
+
     }
 
     public void updateGunDecks(float delta) {
@@ -167,7 +177,9 @@ public class Ship extends DynamicGameObject {
     }
 
     public boolean isSinking(){
-        return bb.targets.get(0).state == bb.targets.get(0).VESSEL_STATE_SINKING;
+
+
+        return state == VESSEL_STATE_SINKING;
     }
 
     public void shipHit(Ship object) {

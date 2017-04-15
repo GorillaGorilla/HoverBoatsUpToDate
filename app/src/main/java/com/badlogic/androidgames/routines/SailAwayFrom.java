@@ -22,7 +22,7 @@ public class SailAwayFrom extends Routine {
     }
 
     @Override
-    public void act(Ship ship, World world, float delta) {
+    public void act(Ship ship, World world, float delta){ super.act(ship, world, delta);
         if (isRunning()){
 
             seq2.act(ship,world,delta);

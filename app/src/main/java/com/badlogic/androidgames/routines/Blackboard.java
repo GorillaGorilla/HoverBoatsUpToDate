@@ -63,11 +63,14 @@ public class Blackboard {
      */
     public Ship ship;
 
+    private String routineChainState;
+
     /**
      * Creates a new instance of the Blackboard class
      */
     public Blackboard(Ship ship, World world)
     {
+        this.routineChainState = "";
         this.ship = ship;
         this.world = world;
         this.targetBearing = new Vector2();
@@ -90,6 +93,22 @@ public class Blackboard {
 //            System.out.println("rotate: "+-speedFac * 10f* ship.TURN_SPEED*ship.TURN_SPEED * (ship.tillerPos / 10f));
         }
         fordwardPos.add(fM.mul(10f));
+    }
+
+    public void addRoutineToState(String routine){
+        StringBuilder sb = new StringBuilder();
+        sb.append(routineChainState);
+        sb.append("->");
+        sb.append(routine);
+        routineChainState = sb.toString();
+    }
+
+    public String getRoutineChainState(){
+        return routineChainState;
+    }
+
+    public void resetRoutineLog(){
+        this.routineChainState = "";
     }
 
 }

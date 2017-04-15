@@ -18,10 +18,11 @@ public class TurnBroadside extends Routine {
     }
 
     @Override
-    public void act(Ship ship, World world, float delta) {
+    public void act(Ship ship, World world, float delta){ super.act(ship, world, delta);
 
         if (isRunning()) {
 //            System.out.println("turning to fire!");
+            ship.bb.addRoutineToState(this.name);
             timer += delta;
             if (!ship.hasLoadedGunDeck(ship.bb.gunDeckChoice)){
                 fail();

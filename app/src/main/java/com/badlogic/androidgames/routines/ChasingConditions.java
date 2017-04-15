@@ -24,8 +24,10 @@ public class ChasingConditions extends Routine {
     }
 
     @Override
-    public void act(Ship ship, World world, float delta) {
+    public void act(Ship ship, World world, float delta){ super.act(ship, world, delta);
         if (isRunning()){
+            name = "chsing cndtn";
+            ship.bb.addRoutineToState(this.name);
 //            if (first){
 //                ship.bb.distHist[2] = 13000;
 //                ship.bb.distHist[1] = 12000;

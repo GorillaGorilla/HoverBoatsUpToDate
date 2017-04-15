@@ -14,7 +14,8 @@ public class BearAway extends Routine {
     }
 
     @Override
-    public void act(Ship ship, World world, float delta) {
+    public void act(Ship ship, World world, float delta){ super.act(ship, world, delta);
+
         if (isRunning()){
             if (!ship.bb.targets.isEmpty()) {
                 ship.tb = ship.position.cpy().sub(ship.bb.targets.get(0).position).angle();

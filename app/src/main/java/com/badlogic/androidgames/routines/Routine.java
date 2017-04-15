@@ -21,13 +21,19 @@ public abstract class Routine {
 
     protected Ship ship;
 
+    protected String name = "unknown";
+
     protected Routine() { }
 
 
 
     public abstract void reset();
 
-    public abstract void act(Ship ship, World world, float delta);
+    public void act(Ship ship, World world, float delta){
+        if(isRunning()) {
+            ship.bb.addRoutineToState(this.name);
+        }
+    };
 
     protected void succeed() {
 //        System.out.println(">>> Routine: " + this.getClass().getSimpleName() + " SUCCEEDED");
@@ -62,6 +68,14 @@ public abstract class Routine {
 
     public void setXY(float x, float y){
 
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public String getName(){
+        return name;
     }
 
 

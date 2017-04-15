@@ -206,7 +206,7 @@ public class CollisionTester {
 //                    StringBuilder sb = new StringBuilder("Hit! ");
 //                    sb.append(Float.toString(energy/1000f));
                     String str = String.format("%.2f", energy/20000f);
-                    toast = new ToastMessage(ball.position.x, ball.position.y,str);
+                    toast = new ToastMessage(ball.position.x, ball.position.y, str);
                     ship1.world.toasts.add(toast);
                     return true;
                 }

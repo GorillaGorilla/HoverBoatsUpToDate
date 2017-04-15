@@ -53,6 +53,7 @@ public class World {
     public final List<Smoke> smokes;
     public final List<Hit> hits = new ArrayList<Hit>();
     public final List<ToastMessage> toasts = new ArrayList<ToastMessage>();
+    public final List<IngameMessage> messages = new ArrayList<IngameMessage>();
     public final WorldListener listener;
     public final Random rand;
 

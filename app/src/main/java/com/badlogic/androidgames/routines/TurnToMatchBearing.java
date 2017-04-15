@@ -11,6 +11,7 @@ public class TurnToMatchBearing extends Routine {
 
     boolean leeward = false;
     public TurnToMatchBearing(){
+        name = "trn mtch brng";
 
     }
 
@@ -21,8 +22,9 @@ public class TurnToMatchBearing extends Routine {
     }
 
     @Override
-    public void act(Ship ship, World world, float delta) {
+    public void act(Ship ship, World world, float delta){ super.act(ship, world, delta);
         if (isRunning()){
+            ship.bb.addRoutineToState(this.name);
 //            System.out.println("bearing ang: "+ ship.tb);
 //            System.out.println("ship ang: "+ ship.angle);
 //            System.out.println("Turning through wind? " +
@@ -40,7 +42,7 @@ public class TurnToMatchBearing extends Routine {
 //                turn directly: dont need to turn through wind OR have enough speed to get through
                 if(AngleCalc.directionClockwise(ship.angle,ship.tb)){
                     ship.tillerPos = - 10;
-//                    System.out.println("Turn right");
+//                    ship.log("turning right to engage enemy");
                 }else if(!AngleCalc.directionClockwise(ship.angle,ship.tb)){
                     ship.tillerPos = 10;
 //                    System.out.println("Turn left");

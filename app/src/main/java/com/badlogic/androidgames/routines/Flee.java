@@ -15,6 +15,7 @@ public class Flee extends Routine{
         safeDistanceCheck = Routines.closeToTest(1000);
         sailAway = new SailAwayFrom();
         sel = Routines.selector(safeDistanceCheck,sailAway);
+        name = "flee";
     }
 
     @Override
@@ -24,7 +25,7 @@ public class Flee extends Routine{
     }
 
     @Override
-    public void act(Ship ship, World world, float delta) {
+    public void act(Ship ship, World world, float delta){ super.act(ship, world, delta);
         if (isRunning()){
             sel.act(ship,world,delta);
             if (safeDistanceCheck.isSuccess()){

@@ -43,7 +43,7 @@ public class SailAwaySimple extends Routine {
     }
 
     @Override
-    public void act(Ship ship, World world, float delta) {
+    public void act(Ship ship, World world, float delta){ super.act(ship, world, delta);
         self = ship;
         if (!self.bb.targets.isEmpty()) {
             enemy = ship.bb.targets.get(0);

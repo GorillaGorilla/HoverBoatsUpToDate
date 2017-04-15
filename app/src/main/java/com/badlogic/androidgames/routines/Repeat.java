@@ -14,6 +14,7 @@ public class Repeat extends Routine {
 
     public Repeat(Routine routine) {
         super();
+        name = "rpt";
         this.routine = routine;
         this.times = -1; // infinite
         this.originalTimes = times;
@@ -39,7 +40,7 @@ public class Repeat extends Routine {
     }
 
     @Override
-    public void act(Ship ship, World world, float delta) {
+    public void act(Ship ship, World world, float delta){ super.act(ship, world, delta);
         if (isRunning())
             if (routine.isFailure()) {
                 fail();

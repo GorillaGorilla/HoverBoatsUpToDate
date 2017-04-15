@@ -19,8 +19,10 @@ public class SetMatchingBearing extends Routine {
     }
 
     @Override
-    public void act(Ship ship, World world, float delta) {
+    public void act(Ship ship, World world, float delta){
+        super.act(ship, world, delta);
         if (isRunning()){
+            ship.bb.addRoutineToState(this.name);
             ship.tb = ship.bb.targets.get(0).velocity.angle();
             succeed();
         }

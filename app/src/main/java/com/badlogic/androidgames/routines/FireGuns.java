@@ -34,9 +34,9 @@ public FireGuns(int type){
     }
 
     @Override
-    public void act(Ship ship, World world, float delta) {
+    public void act(Ship ship, World world, float delta){ super.act(ship, world, delta);
         if (isRunning()){
-
+            ship.bb.addRoutineToState(this.name);
             boolean hasFGunDeck = false;
             for (GunDeck deck : ship.gunDecks){
                 if (deck instanceof ForwardGunDeck){

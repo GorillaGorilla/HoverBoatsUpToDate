@@ -15,7 +15,7 @@ public class Selector extends Routine {
 
     public Selector(Routine... newRoutines){
         super();
-
+        name = "sel";
         for (Routine routine : newRoutines) {
             routines.add(routine);
 
@@ -34,9 +34,10 @@ public class Selector extends Routine {
     }
 
     @Override
-    public void act(Ship ship, World world, float delta) {
+    public void act(Ship ship, World world, float delta){ super.act(ship, world, delta);
         int failCount = 0;
         if (isRunning())
+            ship.bb.addRoutineToState(this.name);
             for (Routine routine : routines) {
                 routine.act(ship, world, delta);
                 if (routine.isFailure()) {

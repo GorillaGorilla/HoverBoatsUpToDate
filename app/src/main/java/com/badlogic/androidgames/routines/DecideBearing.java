@@ -20,6 +20,7 @@ public class DecideBearing extends Routine {
     public  DecideBearing(float destx, float desty){
         this.destination.x = destx;
         this.destination.y = desty;
+        name = "decideBrng";
     }
 
     public  DecideBearing(){
@@ -32,8 +33,9 @@ public class DecideBearing extends Routine {
     }
 
     @Override
-    public void act(Ship ship, World world, float delta) {
+    public void act(Ship ship, World world, float delta){ super.act(ship, world, delta);
         if (isRunning()){
+            ship.bb.addRoutineToState(this.name);
 //            System.out.println("Deciding bearing");
             if (intercept){
                 destination.x = ship.bb.interceptionPoint.x;

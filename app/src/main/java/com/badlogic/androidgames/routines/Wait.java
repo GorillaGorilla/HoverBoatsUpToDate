@@ -19,8 +19,6 @@ public class Wait extends Routine {
 
 
     }
-    public Wait(){
-    }
 
     @Override
     public void reset() {
@@ -29,8 +27,10 @@ public class Wait extends Routine {
     }
 
     @Override
-    public void act(Ship ship, World world, float delta) {
+    public void act(Ship ship, World world, float delta){
+        super.act(ship, world, delta);
         if (isRunning()) {
+            ship.bb.addRoutineToState(this.name);
             timer -= delta;
             if (timer<0){
                 succeed();
