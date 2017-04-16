@@ -22,7 +22,7 @@ public class TurnBroadside extends Routine {
 
         if (isRunning()) {
 //            System.out.println("turning to fire!");
-            ship.bb.addRoutineToState(this.name);
+
             timer += delta;
             if (!ship.hasLoadedGunDeck(ship.bb.gunDeckChoice)){
                 fail();

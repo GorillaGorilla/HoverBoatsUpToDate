@@ -58,12 +58,12 @@ public class Ship extends DynamicGameObject {
     public float dAngle;
     public float damage = 0;
     public float targetBearing = 0;
-    public float tb = 0;
+    public float tb = 0;   //tatget bearing
     public float tillerPos = 0;
     public float sailAngle = 0;
     public Circle bounds2;
     public Routine routine;
-    private String name;
+    protected String name;
     public BoundingShape boundingShape = new BoundingShape();
     public float spriteFactor = 1;  // this is a temporary scalar to allow me to alter the size of different boats
 
@@ -84,12 +84,15 @@ public class Ship extends DynamicGameObject {
     public float CdyNormal = 0.5f;
     public Vector2 impulse = new Vector2();
     public Vector2 destination;
-    public IngameMessage stateMessage;
+    protected IngameMessage stateMessage;
+    protected IngameMessage nameLabel;
+    protected IngameMessage destinationLabel;
     private boolean starting = true;
 
 
     public Ship(float x, float y, Vector2 initialHeading, Vector2 wind, World world, float length, float width) {
         super(x, y, length, width);
+        setRandomName();
         VESSEL_LENGTH = length;
         VESSEL_WIDTH = width;
         bounds.lowerLeft.set(position).sub(VESSEL_LENGTH / 2, VESSEL_WIDTH / 2);
@@ -108,7 +111,13 @@ public class Ship extends DynamicGameObject {
         this.bb = new Blackboard(this, world);
         name = "Unnamed";
         stateMessage = new IngameMessage(position.x, position.y, bb.getRoutineChainState());
-        world.messages.add(stateMessage);
+        nameLabel = new IngameMessage(position.x, position.y - 5, name);
+        destinationLabel = new IngameMessage(position.x, position.y, "Dest");
+        if (world.DEBUG_MODE){
+            world.messages.add(stateMessage);
+            world.messages.add(nameLabel);
+        }
+
 
     }
 
@@ -138,6 +147,8 @@ public class Ship extends DynamicGameObject {
         bb.update();
         stateMessage.setMessage(bb.getRoutineChainState());
         stateMessage.updatePosition(position.x, position.y);
+        nameLabel.setMessage(name);
+        nameLabel.updatePosition(position.x, position.y -5);
 
     }
 
@@ -427,6 +438,10 @@ public class Ship extends DynamicGameObject {
 
     public void setName(String name){
         this.name = name;
+    }
+
+    public void setDestLabelPosition(Vector2 dest){
+
     }
 
     public void setRandomName(){

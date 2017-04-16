@@ -46,7 +46,7 @@ public class Sequence extends Routine {
         float successCount = 0;
         if (isRunning())
 //        checks each routine for success, if one is found unsucceeded then loop breaks and success not called.
-            ship.bb.addRoutineToState(this.name);
+
             for (Routine routine : routines) {
                 routine.act(ship, world, delta);
                 if (routine.isFailure()){

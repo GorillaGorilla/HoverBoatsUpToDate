@@ -24,7 +24,7 @@ public class TurnToMatchBearing extends Routine {
     @Override
     public void act(Ship ship, World world, float delta){ super.act(ship, world, delta);
         if (isRunning()){
-            ship.bb.addRoutineToState(this.name);
+
 //            System.out.println("bearing ang: "+ ship.tb);
 //            System.out.println("ship ang: "+ ship.angle);
 //            System.out.println("Turning through wind? " +

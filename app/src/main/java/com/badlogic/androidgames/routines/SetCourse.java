@@ -27,7 +27,7 @@ public class SetCourse extends Routine {
     @Override
     public void act(Ship ship, World world, float delta){ super.act(ship, world, delta);
         if (isRunning()){
-            ship.bb.addRoutineToState(this.name);
+
             System.out.println("Turning through wind? " + AngleCalc.turnThroughWind(ship.angle,bearing,world.wind.angle()));
             if (Math.abs(ship.angle - bearing)<0.1){
                 succeed();

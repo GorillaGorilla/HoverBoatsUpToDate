@@ -45,14 +45,13 @@ public class CloseToTest extends Routine {
     }
 
     @Override
-    public void act(Ship ship, World world, float delta){ super.act(ship, world, delta);
+    public void act(Ship ship, World world, float delta){
+        super.act(ship, world, delta);
         if (isRunning()){
-            ship.bb.addRoutineToState(this.name);
             if (ship.bb.targets.isEmpty() && targetTest){
                 fail();
                 return;
             }
-
             if (intercept){
                 point = ship.bb.interceptionPoint.cpy();
                 closeness = 100;
@@ -60,8 +59,6 @@ public class CloseToTest extends Routine {
             if (targetTest){
                 point = ship.bb.targets.get(0).position.cpy();
             }
-
-
 //            System.out.println("Checking Whether close to");
 //            System.out.println("distance to point " + point.dist(ship.position));
             if (point.dist(ship.position)<closeness){

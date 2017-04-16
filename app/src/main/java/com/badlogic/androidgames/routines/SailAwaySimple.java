@@ -31,6 +31,7 @@ public class SailAwaySimple extends Routine {
     }
 
     public SailAwaySimple(List<Vector2> points){
+        System.out.print("---&&& SailAwaySimple right declaration called");
         sailAway = new SailAwayFrom();
         patrol = Routines.patrol(points);
     }

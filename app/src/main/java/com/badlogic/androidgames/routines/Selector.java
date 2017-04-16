@@ -37,7 +37,7 @@ public class Selector extends Routine {
     public void act(Ship ship, World world, float delta){ super.act(ship, world, delta);
         int failCount = 0;
         if (isRunning())
-            ship.bb.addRoutineToState(this.name);
+
             for (Routine routine : routines) {
                 routine.act(ship, world, delta);
                 if (routine.isFailure()) {

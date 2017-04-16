@@ -41,15 +41,25 @@ public class Patrol extends Routine {
     public void act(Ship ship, World world, float delta){ super.act(ship, world, delta);
         if (isRunning()){
             if (first){
-                findStartPoint(ship.position);
+                int startingPoint = findStartPoint(ship.position);
                 first = false;
+
                 for (Vector2 point : points){
-                    routines.add(Routines.moveTo(point.x,point.y));
+                    Routine moveTo = Routines.moveTo(point.x,point.y);
+                    routines.add(moveTo);
+
                     System.out.println("MoveTo: " + point.display());
                 }
                 sequence = Routines.sequence(routines);
                 repeat = Routines.repeat(sequence);
                 repeat.reset();
+                int currentIndex = 0;
+                for (Routine move : routines){
+                    if (currentIndex < startingPoint){
+                        move.succeed();
+                    }
+                    currentIndex++;
+                }
             }
 
             repeat.act(ship, world, delta);
@@ -65,14 +75,28 @@ public class Patrol extends Routine {
 
     }
 
-    private void findStartPoint(final Vector2 position){
+    private int findStartPoint(final Vector2 position){
 
-        Collections.sort(points,new Comparator<Vector2>(){
-            @Override public int compare(Vector2 p1, Vector2 p2){
-                return (int)(p1.dist(position) - (int)p2.dist(position));
+//        this is broken, it sorts based on the closest, so the order of the points is changed permanently.
+//        the order should be preserved, one should be able to start from te second point
+
+//        instead find index of closest, and succeed the ones before. work through from there
+        float minDist = 99999;
+        int indexOfClosest = 0;
+        for (int i = 0; i < points.size(); i++){
+            float distance = points.get(i).dist(position);
+            if (distance < minDist) {
+                minDist = distance;
+                indexOfClosest = i;
             }
-
-        });
+        }
+        return indexOfClosest;
+//        Collections.sort(points,new Comparator<Vector2>(){
+//            @Override public int compare(Vector2 p1, Vector2 p2){
+//                return (int)(p1.dist(position) - (int)p2.dist(position));
+//            }
+//
+//        });
 
 //
 //        float closest = 1000000f;

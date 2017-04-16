@@ -56,6 +56,7 @@ public class World {
     public final List<IngameMessage> messages = new ArrayList<IngameMessage>();
     public final WorldListener listener;
     public final Random rand;
+    public boolean DEBUG_MODE = true;
 
     public int score;
     public int state;
@@ -74,11 +75,11 @@ public class World {
         this.buoys = new ArrayList<Buoy>();
 
 //        patrol points to be marked with buoys
-        patrolPoints.add(new Vector2(2000f,3500f));
-        patrolPoints.add(new Vector2(1850f,3000f));
-        patrolPoints.add(new Vector2(1700f,3200f));
-        patrolPoints.add(new Vector2(2100f,3300f));
-        patrolPoints.add(new Vector2(300f,2500f));
+        patrolPoints.add(new Vector2(2000f,3750f));
+        patrolPoints.add(new Vector2(1500f,3750f));
+        patrolPoints.add(new Vector2(1400f,3000f));
+        patrolPoints.add(new Vector2(1400f,2250f));
+        patrolPoints.add(new Vector2(2000f,2250f));
 
         for (Vector2 point : patrolPoints){
             buoys.add(new Buoy(point.x,point.y));
@@ -97,18 +98,11 @@ public class World {
 
         hmsVictory.state = hmsVictory.VESSEL_STATE_SAILING;
         hmsVictory.velocity.set(2,0);
-        for (int i = 0; i<6; i++) {
+        for (int i = 0; i<3; i++) {
             rocks.add(new Rock(2050 + (i+1) * 80, (3000 + (i+1) * 80)));
             ships.add(new CargoBoat(2200 + (i+1) * 150, (3040 + (i+1) * 0),new Vector2(1,0f),wind,this));
         }
 
-
-        List<Vector2> patrolPoints = new ArrayList<Vector2>();
-        patrolPoints.add(new Vector2(2000f,3500f));
-        patrolPoints.add(new Vector2(1850f,3000f));
-        patrolPoints.add(new Vector2(1700f,3200f));
-        patrolPoints.add(new Vector2(2100f,3300f));
-        patrolPoints.add(new Vector2(300f,2500f));
         for (Ship ship : ships){
             ship.velocity.set(3,0).rotate(ship.angle);
             ship.bb.targets.add(hmsVictory);
@@ -117,15 +111,17 @@ public class World {
 //            ship.setRoutine(Routines.engageEnemy());
 //            Routine test = Routines.repeat(Routines.selector(Routines.sequence(new IsSafeTest(),Routines.patrol(patrolPoints)),new Flee()));
             ship.setRoutine(new SailAwaySimple(patrolPoints));
+//            ship.setRoutine(Routines.patrol(patrolPoints));
 //            ship.setRoutine(new Idle());
             ship.routine.reset();
         }
 //        extra enemy for fun
-        EnemyShip enemy = new EnemyShip(1850, (3000),new Vector2(5,0f),wind,this);
-        enemy.setRoutine(new HuntPatrol(patrolPoints));
-        enemy.bb.targets.add(hmsVictory);
-        enemy.routine.reset();
-        ships.add(enemy);
+//        EnemyShip enemy = new EnemyShip(1850, (3000),new Vector2(5,0f),wind,this);
+//        enemy.setName("BlackBeard");
+//        enemy.setRoutine(new HuntPatrol(patrolPoints));
+//        enemy.bb.targets.add(hmsVictory);
+//        enemy.routine.reset();
+//        ships.add(enemy);
         for (Ship ship : ships){
             if (ship instanceof CargoBoat){
                 ship.pointsForKill = 100f;
@@ -135,9 +131,15 @@ public class World {
                 ship.pointsForHit = 5f;
             }
         }
+
+
     }
 
     public void update(float delta, float tillerPosition){
+        if (DEBUG_MODE){
+            delta = delta*4;
+        }
+
         checkCollisions();
         ForcesHandler.calculateLoads(hmsVictory, delta, tillerPosition);
         hmsVictory.update(delta, tillerPosition);
@@ -159,8 +161,7 @@ public class World {
         }
 
         t2 += delta;
-        if (t2 > 180){
-            spawnNewBoats();
+        if (t2 > 300){
             spawnNewBoats();
             spawnNewBoats();
             t2 = 0;
@@ -270,9 +271,7 @@ public class World {
                     if (entity == ship) {
                         continue;
                     }
-                    if (CollisionTester.checkVertexCircleCollisions(entity, ship)){
-
-                    }
+                    CollisionTester.checkVertexCircleCollisions(entity, ship);
 //                        must be returned to their actual orientation
             }
 

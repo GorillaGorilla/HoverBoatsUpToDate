@@ -13,6 +13,7 @@ public class PlayerShip extends Ship {
     public static float TURN_SPEED = 3f;
 
 
+    int hat = 5;
     float windFY;
     GunDeck starboardGuns;
     GunDeck portGuns;
@@ -67,6 +68,8 @@ public class PlayerShip extends Ship {
         updateGunDecks(delta);
         updateMasts(delta);
         bb.update();
+        nameLabel.setMessage(name + " x: " + (int)position.x + " " + (int)position.y );
+        nameLabel.updatePosition(position.x, position.y -5);
     }
 
 }

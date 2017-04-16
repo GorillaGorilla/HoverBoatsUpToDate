@@ -30,7 +30,7 @@ public class ChooseGunDeck extends Routine {
     public void act(Ship ship, World world, float delta){ super.act(ship, world, delta);
 
         if(isRunning()) {
-            ship.bb.addRoutineToState(this.name);
+
             System.out.println("Choosing gunDeck");
             target = ship.bb.targets.get(0);
             distance = ship.bb.distHist[0];

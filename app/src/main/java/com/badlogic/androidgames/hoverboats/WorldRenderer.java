@@ -75,17 +75,13 @@ public class WorldRenderer {
     }
 
     private void renderToasts() {
-
         for (ToastMessage toastMessage : world.toasts){
-
             if (toastMessage.state == toastMessage.DISPLAY) {
 //                System.out.println("rendering toasts");
-
                 Assets.font.drawToast(batcher, toastMessage.message,
                         toastMessage.position.x - toastMessage.width / 2,
                         toastMessage.position.y - toastMessage.height,(1f/7f));
             }
-
         }
 
     }
@@ -117,14 +113,12 @@ public class WorldRenderer {
     }
 
     private void renderShips() {
-
         List<Ship> ships = world.ships;
         for (Ship ship : ships) {
             if (ship.state == ship.VESSEL_STATE_SUNK) {
             } else if (ship.state == ship.VESSEL_STATE_SINKING) {
                 TextureRegion keyFrame = Assets.breakingShip.getKeyFrame(ship.stateTime,
                         Animation.ANIMATION_NONLOOPING);
-
                 batcher.drawSprite(ship.position.x, ship.position.y, 10*ship.spriteFactor, 21*ship.spriteFactor,
                         (ship.angle - 90), keyFrame);
             }else {
@@ -139,21 +133,27 @@ public class WorldRenderer {
                                 mast.depth*mast.sizeScalingFactor,
                                 (ship.angle - 90 + mast.rotation),
                                 keyFrame);
-                        if (ship.bb.inDanger){
-                            batcher.drawSprite(ship.position.x+10, ship.position.y+10,
-                                    3, 4,
-                                    (ship.angle),keyFrame);
-                        }
+
 
                     }
                 }
+
+                if (world.DEBUG_MODE){
+                    if (ship.bb.inDanger){
+                        batcher.drawSprite(ship.position.x+10, ship.position.y+10,
+                                3, 4,
+                                (ship.angle),keyFrame);
+                    }
+
+                    Vector2 bearingLine = new Vector2(50, 0);
+                    bearingLine.rotate(ship.tb);
+                    bearingLine.add(ship.position);
+                    keyFrame = Assets.cannonBall;
+                    batcher.drawSprite(ship.position.x, ship.position.y, 50, 2, ship.tb, keyFrame);
+                }
             }
-//            Rectangle b = ship.bounds;
-//            TextureRegion keyFrame = Assets.cannonBall;
-//            for (Vector2 point : ship.boundingShape.pointListWorld){
-//                batcher.drawSprite(point.x, point.y, 1, 1,
-//                        keyFrame);
-//            }
+
+
         }
     }
 
@@ -181,11 +181,9 @@ public class WorldRenderer {
         for (GunDeck deck : world.hmsVictory.gunDecks) {
             TextureRegion keyFrame = Assets.cannonFire.getKeyFrame(deck.stateTime,
                     Animation.ANIMATION_NONLOOPING);
-
             if (deck.state == deck.GUNS_STATE_FIRING) {
                 float[] gpos = deck.positions;
                 for (int i = 0; i < gpos.length; i++) {
-
                     if (deck.timer[i] > 0 && deck.timer[i] < 0.4f) {
                         Vector2 pos = new Vector2(deck.offset, gpos[i]);
                         pos.rotate((world.hmsVictory.angle + deck.orientation));
@@ -199,20 +197,16 @@ public class WorldRenderer {
         if (world.hmsVictory.state == world.hmsVictory.VESSEL_STATE_SINKING) {
             TextureRegion keyFrame = Assets.breakingShip.getKeyFrame(world.hmsVictory.stateTime,
                     Animation.ANIMATION_NONLOOPING);
-
             batcher.drawSprite(world.hmsVictory.position.x, world.hmsVictory.position.y, 12, 25,
                     (world.hmsVictory.angle - 90), keyFrame);
         } else if (world.hmsVictory.state == world.hmsVictory.VESSEL_STATE_SUNK) {
-
         } else {
             TextureRegion keyFrame = Assets.newBoatHull;
             batcher.drawSprite(world.hmsVictory.position.x, world.hmsVictory.position.y,
                     5.5f, 27.5f, (world.hmsVictory.angle - 90), keyFrame);
 //            batcher.drawSprite(world.hmsVictory.bb.fordwardPos.x, world.hmsVictory.bb.fordwardPos.y,
 //                    5.5f*0.5f, 27.5f*0.5f, (world.hmsVictory.angle - 90), keyFrame);
-
             keyFrame = Assets.newSailLarge;
-
             if (!world.hmsVictory.masts.isEmpty()) {
                 for (Mast mast : world.hmsVictory.masts) {
                     if(world.hmsVictory.getSailState().equals("BALANCED")){
@@ -231,7 +225,6 @@ public class WorldRenderer {
                                 (world.hmsVictory.angle - 90 + mast.rotation),
                                 keyFrame);
                     }
-
                 }
             }
         }
@@ -249,7 +242,6 @@ public class WorldRenderer {
             batcher.drawSprite(rock.position.x, rock.position.y,
                     25, 20, keyFrame);
         }
-
     }
 
 }
