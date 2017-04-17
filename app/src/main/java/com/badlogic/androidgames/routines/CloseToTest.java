@@ -79,9 +79,10 @@ public class CloseToTest extends Routine {
             }
         }
     }
-
     @Override
     protected void fail() {
+        System.out.println(">>> Routine: " + this.getClass().getSimpleName() + " " + closeness + " FAILED");
         this.state = RoutineState.Failure;
     }
+
 }

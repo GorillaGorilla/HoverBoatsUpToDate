@@ -44,6 +44,7 @@ public class World {
     public static final Vector2 stream = new Vector2(0,0);
     public static final Vector2 instantaneousWind = wind.cpy();
     public List<Vector2> windHist = new ArrayList<Vector2>();
+    EnemyShip enemy;
 
     public final PlayerShip hmsVictory;
     public final List<Buoy> buoys;
@@ -56,7 +57,7 @@ public class World {
     public final List<IngameMessage> messages = new ArrayList<IngameMessage>();
     public final WorldListener listener;
     public final Random rand;
-    public boolean DEBUG_MODE = true;
+    public boolean DEBUG_MODE = false;
 
     public int score;
     public int state;
@@ -106,22 +107,17 @@ public class World {
         for (Ship ship : ships){
             ship.velocity.set(3,0).rotate(ship.angle);
             ship.bb.targets.add(hmsVictory);
-//            ship.position.set(45+WORLD_WIDTH/2,WORLD_HEIGHT/2);
-//            ship.setRoutine(Routines.repeat(Routines.sequence(Routines.closeOnTarget(),Routines.moveTo(rand.nextFloat()*WORLD_WIDTH,rand.nextFloat()*WORLD_HEIGHT))));
-//            ship.setRoutine(Routines.engageEnemy());
-//            Routine test = Routines.repeat(Routines.selector(Routines.sequence(new IsSafeTest(),Routines.patrol(patrolPoints)),new Flee()));
             ship.setRoutine(new SailAwaySimple(patrolPoints));
-//            ship.setRoutine(Routines.patrol(patrolPoints));
-//            ship.setRoutine(new Idle());
             ship.routine.reset();
         }
 //        extra enemy for fun
-//        EnemyShip enemy = new EnemyShip(1850, (3000),new Vector2(5,0f),wind,this);
-//        enemy.setName("BlackBeard");
-//        enemy.setRoutine(new HuntPatrol(patrolPoints));
-//        enemy.bb.targets.add(hmsVictory);
-//        enemy.routine.reset();
-//        ships.add(enemy);
+        enemy = new EnemyShip(1850, (3000),new Vector2(5,0f),wind,this);
+        enemy.setName("BlackBeard");
+        enemy.setRoutine(new HuntPatrol(patrolPoints));
+//        enemy.setRoutine(Routines.engageEnemy());
+        enemy.bb.targets.add(hmsVictory);
+        enemy.routine.reset();
+        ships.add(enemy);
         for (Ship ship : ships){
             if (ship instanceof CargoBoat){
                 ship.pointsForKill = 100f;
@@ -137,8 +133,9 @@ public class World {
 
     public void update(float delta, float tillerPosition){
         if (DEBUG_MODE){
-            delta = delta*4;
+            delta = delta*6;
         }
+        delta = delta*1.5f;
 
         checkCollisions();
         ForcesHandler.calculateLoads(hmsVictory, delta, tillerPosition);
@@ -157,7 +154,7 @@ public class World {
             System.out.println("player position: " + hmsVictory.position.display());
             System.out.println("angVel" + hmsVictory.angVel.z);
             timer = 0;
-//            updateWind();
+            updateWind();
         }
 
         t2 += delta;
@@ -352,6 +349,8 @@ public class World {
         int xPos, yPos;
         Vector2 h = new Vector2(3,0);
         Ship boat = new EnemyShip(0,0, h, wind, this);
+        boat.pointsForKill = 15f;
+        boat.pointsForHit = 5f;
             boolean retry = true;
             while (retry) {
                 retry = false;
@@ -378,7 +377,7 @@ public class World {
                 }
             }
         System.out.println("space found");
-        boat.setRoutine(Routines.engageEnemy());
+        boat.setRoutine(Routines.huntPatrol(patrolPoints));
         boat.bb.targets.add(hmsVictory);
         boat.routine.reset();
             ships.add(boat);

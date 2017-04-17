@@ -37,10 +37,11 @@ public class CloseOnTarget extends Routine {
         losingTargetTester = Routines.chasingConditions();
 
         decideBearing = Routines.decideBearing();
-        sequence = Routines.sequence(losingTargetTester,calcIntercept, decideBearing, turn, wait);
+        sequence = Routines.sequence(losingTargetTester, calcIntercept, decideBearing, turn, wait);
         r = Routines.repeat(sequence);
 //        r2 = Routines.repeat(select);
         selector = Routines.selector(select, r);
+        selector.setName("Shoot N CHASE");
     }
 
     @Override
@@ -70,8 +71,6 @@ public class CloseOnTarget extends Routine {
             ship.bb.distHist[1] = ship.bb.distHist[0];
             ship.bb.distHist[0] = ship.position.dist(ship.bb.targets.get(0).position);
 
-
-
             selector.act(ship, world, delta);
 
             if (atDest.isSuccess()) {
@@ -79,12 +78,11 @@ public class CloseOnTarget extends Routine {
                 return;
             }
 
-
-
             if (selector.isFailure()) {
                 fail();
             }
             if (select.isFailure()) {
+
                 select.reset();
             }
 

@@ -111,6 +111,12 @@ public class Routines {
         return new MoveTo(posx, posy);
     }
 
+    public static Routine huntPatrol(Vector2... vector2s) {
+        return new HuntPatrol(vector2s);
+    };
+    public static Routine huntPatrol(List<Vector2> vecs) {
+        return new HuntPatrol(vecs);
+    };
 
     public static SetCourse setCourse(float course){
         return new SetCourse(course);

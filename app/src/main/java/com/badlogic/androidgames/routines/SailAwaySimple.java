@@ -57,6 +57,7 @@ public class SailAwaySimple extends Routine {
                 sailAway.act(ship,world,delta);
                 if (self.position.dist(enemy.position)>500){
                     fleeing = false;
+                    ship.bb.inDanger = false;
                     sailAway.reset();
                 }
             }else{

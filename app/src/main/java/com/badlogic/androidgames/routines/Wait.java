@@ -16,8 +16,7 @@ public class Wait extends Routine {
             System.out.print("timer must be greater than 0");
             this.startingTime = 1;
         }
-
-
+        setName("Wait" + seconds);
     }
 
     @Override

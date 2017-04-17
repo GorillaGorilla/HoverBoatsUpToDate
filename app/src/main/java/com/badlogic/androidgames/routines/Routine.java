@@ -21,7 +21,7 @@ public abstract class Routine {
 
     protected Ship ship;
 
-    protected String name = "unknown";
+    protected String name = this.getClass().getSimpleName();
 
     protected Routine() { }
 
@@ -62,7 +62,7 @@ public abstract class Routine {
     }
 
     public void start() {
-//        System.out.println(">>> Starting routine: " + this.getClass().getSimpleName());
+        System.out.println(">>> Starting routine: " + this.getClass().getSimpleName());
         this.state = RoutineState.Running;
     }
 

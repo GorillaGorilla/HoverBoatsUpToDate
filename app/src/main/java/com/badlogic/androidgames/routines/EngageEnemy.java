@@ -61,10 +61,9 @@ public class EngageEnemy extends Routine {
     }
 
     @Override
-    public void act(Ship ship, World world, float delta){ super.act(ship, world, delta);
-
+    public void act(Ship ship, World world, float delta){
+        super.act(ship, world, delta);
         if (isRunning()){
-            ship.bb.resetRoutineLog();
             if (ship.bb.targets.isEmpty()){
                 fail();
             }else if(ship.bb.targets.get(0).isSinking()){
@@ -82,4 +81,5 @@ public class EngageEnemy extends Routine {
         }
 
     }
+
 }

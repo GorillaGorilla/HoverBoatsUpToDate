@@ -41,7 +41,7 @@ public class Selector extends Routine {
             for (Routine routine : routines) {
                 routine.act(ship, world, delta);
                 if (routine.isFailure()) {
-//                    add to failcount and try next routine
+//                    add to failCount and try next routine
                     failCount ++;
                 }
 
@@ -68,15 +68,6 @@ public class Selector extends Routine {
 
 
 
-    protected void succeed() {
-//        System.out.println(">>> Routine: " + this.getClass().getSimpleName() + " SUCCEEDED");
-        this.state = RoutineState.Success;
-    }
-
-    protected void fail() {
-//        System.out.println(">>> Routine: " + this.getClass().getSimpleName() + " FAILED");
-        this.state = RoutineState.Failure;
-    }
 
     public boolean isSuccess() {
         return state.equals(RoutineState.Success);
@@ -95,10 +86,6 @@ public class Selector extends Routine {
         return state;
     }
 
-    public void start() {
-//        System.out.println(">>> Starting routine: " + this.getClass().getSimpleName());
-        this.state = RoutineState.Running;
-    }
 
     public List<Routine> getRoutines(){
         return routines;

@@ -27,7 +27,7 @@ public class HuntPatrol extends Routine {
             vecs.add(vec);
         }
         patrol = Routines.patrol(vecs);
-        selector = Routines.sequence(engageTarget, patrol);
+        selector = Routines.selector(engageTarget, patrol);
     }
     public HuntPatrol(List<Vector2> vecs){
         engageTarget = Routines.engageEnemy();
@@ -47,10 +47,9 @@ public class HuntPatrol extends Routine {
             if (engageTarget.isFailure() && !ship.bb.targets.isEmpty()) {
                 for (Ship target : ship.bb.targets) {
                     if (target.position.dist(ship.position) < 300) {
+//                        System.out.println("---&&& HuntPatrol engage resetting... dist: " + target.position.dist(ship.position));
                         engageTarget.reset();
-                    } else {
-                        engageTarget.fail();
-                    }
+                        }
                 }
             }
 

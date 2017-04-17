@@ -29,7 +29,7 @@ public class TurnBroadside extends Routine {
                 System.out.println("failed turing to fire!");
                 return;
             }
-            System.out.println("---&&& Turning to fire" + timer);
+//            System.out.println("---&&& Turning to fire" + timer);
             if (ship.bb.gunDeckChoice == 2) {
 //            starboard
 

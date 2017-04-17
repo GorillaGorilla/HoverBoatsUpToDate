@@ -26,7 +26,7 @@ public class Patrol extends Routine {
 
         this.points = points;
         this.routines = new ArrayList<Routine>();
-
+        setName("Patrol");
 
     }
 
@@ -38,7 +38,8 @@ public class Patrol extends Routine {
     }
 
     @Override
-    public void act(Ship ship, World world, float delta){ super.act(ship, world, delta);
+    public void act(Ship ship, World world, float delta){
+        super.act(ship, world, delta);
         if (isRunning()){
             if (first){
                 int startingPoint = findStartPoint(ship.position);
